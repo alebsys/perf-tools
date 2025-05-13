@@ -1,0 +1,21 @@
+#!/usr/bin/env bpftrace
+
+// ----------------------------------------------------------------------------
+// Script:        tx-queue-consumers.bt
+// Description:   Count net_dev_start_xmit events per queue_mapping, process and pid.
+// Usage:         tx-queue-consumers.bt <iface> [queue_mapping]
+//   <iface>           Network interface name, e.g. eth0
+//   [queue_mapping]   (optional) Queue index to filter, integer.
+// Examples:
+//   # count on all queues of eth0
+//   tx-queue-consumers.bt eth0
+//   # count only queue 2 of eth0
+//   tx-queue-consumers.bt eth0 2
+// ----------------------------------------------------------------------------
+
+
+tracepoint:net:net_dev_start_xmit
+/ str(args->name) == str($1) && ( $# < 2 || args->queue_mapping == $2 ) /
+{
+    @[args->queue_mapping, comm, pid] = count();
+}
