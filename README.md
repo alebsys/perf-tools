@@ -9,6 +9,7 @@ So you can run your `.bt` scripts from anywhere:
 ```bash
 git clone https://github.com/alebsys/perf-tools.git
 cd perf-tools
+chmod +x bpftrace/*
 export PATH="$(pwd)/bpftrace:$PATH"
 ```
 
@@ -16,5 +17,6 @@ export PATH="$(pwd)/bpftrace:$PATH"
 ```bash
 git clone https://github.com/alebsys/perf-tools.git
 cd perf-tools
+chmod +x bpftrace/*
 echo 'export PATH="$(pwd)/bpftrace:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
